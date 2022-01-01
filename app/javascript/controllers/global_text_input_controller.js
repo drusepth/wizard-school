@@ -50,7 +50,6 @@ export default class extends Controller {
         }
       });
 
-      this.trigger();
       this.initialize_texts();
     }
   }
@@ -69,9 +68,5 @@ export default class extends Controller {
     } else {
       return 0;
     }
-  }
-
-  trigger() {
-    alert('triggered spell');
   }
 }

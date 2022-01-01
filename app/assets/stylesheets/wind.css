@@ -627,6 +627,40 @@ Ensure the default browser behavior of the `hidden` attribute.
   flex-grow: 1;
 }
 
+@-webkit-keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  -webkit-animation: spin 1s linear infinite;
+          animation: spin 1s linear infinite;
+}
+
+@-webkit-keyframes pulse {
+  50% {
+    opacity: .5;
+  }
+}
+
+@keyframes pulse {
+  50% {
+    opacity: .5;
+  }
+}
+
+.animate-pulse {
+  -webkit-animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+          animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
 .flex-row {
   flex-direction: row;
 }
@@ -891,12 +925,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-green-800 {
   --tw-text-opacity: 1;
   color: rgb(22 101 52 / var(--tw-text-opacity));
-}
-
-@-webkit-keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 @keyframes spin {

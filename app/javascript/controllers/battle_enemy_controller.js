@@ -43,14 +43,33 @@ export default class extends Controller {
     console.log('caught debug in battle enemy controller');
   }
 
-  disconnect() {
+  disconnect() { }
 
+  receive_damage(event) {
+    this.animate_damage_taken();
+
+    this.remove_life(event.detail.damage);
+    this.update_health_bar();
   }
 
-  damage_target(event) {
-    console.log('damaging target!!!!');
-    // console.log('finished cast');
-    // console.log(event.detail);
+  remove_life(amount) {
+    let current_health = this.current_health;
+    current_health -= amount;
+
+    if (current_health < 0) {
+      current_health = 0;
+    }
+
+    this.data.set('current-health', current_health);
+  }
+
+  animate_damage_taken() {
+    this.imageTarget.classList.add('animate-spin');
+    setTimeout(this.reset_animations.bind(this), 1320);
+  }
+
+  reset_animations() {
+    this.imageTarget.classList.remove('animate-spin');
   }
 
   get targeted() {

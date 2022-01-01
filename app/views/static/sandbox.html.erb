@@ -11,8 +11,7 @@
           data-battle-enemy-targeted="<%= i == 0 %>"
           data-battle-enemy-max-health="<%= 1 + rand(10) * rand(10) %>"
           data-action="
-            casting-spell:spellDamageTarget->battle-enemy#damage_target
-            spellDamageTarget@document->battle-enemy#debug
+            spellDamageTarget@document->battle-enemy#receive_damage
           "
           class="p-4 lg:w-1/3"
         >
@@ -20,7 +19,7 @@
             class="h-full bg-gray-100 bg-opacity-75 px-8 pt-16 pb-24 rounded-lg overflow-hidden text-center relative"
           >
             <h2 data-battle-enemy-target="type" class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">&nbsp;</h2>
-            <img data-battle-enemy-target="image" class="lg:h-48 md:h-36 w-48 mx-auto object-cover object-center my-2 rounded-full hover:animate-spin" src="https://dummyimage.com/400x400">
+            <img data-battle-enemy-target="image" class="lg:h-48 md:h-36 w-48 mx-auto object-cover object-center my-2 rounded-full" src="https://dummyimage.com/400x400">
             <h1 data-battle-enemy-target="name" class="title-font sm:text-2xl text-xl font-medium text-gray-900 mb-3">&nbsp;</h1>
             <div class="w-full bg-gray-200 h-2 mb-1 rounded-lg">
               <div data-battle-enemy-target="healthBar"

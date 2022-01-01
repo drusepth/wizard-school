@@ -36,6 +36,7 @@ export default class extends Controller {
 
   start_casting(event) {
     this.create_ticking_timer();
+    this.data.set('seconds-remaining', this.data.get('max-time'));
   }
 
   finish_casting(event) {
@@ -63,15 +64,12 @@ export default class extends Controller {
       clearInterval(this.data.get('cast-interval'));
     }
 
-    console.log('dispatching spellDamageTarget');
-    // this.dispatch("spellDamageTarget", {
-    //   detail: {
-    //     damage: final_damage
-    //   }
-    // });
-
+    // We dispatch the event to the full document (unscoped) so all
+    // enemies can receive it, rather than a specific one.
     const eventTrigger = new CustomEvent('spellDamageTarget', {
-      damage: final_damage
+      detail: {
+        damage: final_damage
+      }
     });
     document.dispatchEvent(eventTrigger);
   }
