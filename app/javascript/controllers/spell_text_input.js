@@ -28,28 +28,11 @@ export default class extends Controller {
       this.remainingTarget.textContent = this.message.substring(current_index);
 
       this.data.set('index', current_index);
-
     } else {
       console.log(event.key + " != " + expected_key);
     }
-
-    // Emit startedCastingSpell if we just triggered the first character
-    if (this.index == 1 && event.key == expected_key) {
-      this.dispatch("startedCastingSpell", {
-        detail: {
-          started_at: new Date().getTime()
-        }
-      });
-    }
     
     if (this.index >= this.message.length) {
-      console.log('done casting spell');
-      this.dispatch("finishedCastingSpell", {
-        detail: {
-          finished_at: new Date().getTime()
-        }
-      });
-
       this.trigger();
       this.initialize_texts();
     }

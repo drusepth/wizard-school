@@ -39,8 +39,18 @@ export default class extends Controller {
     this.update_activity_bar();
   }
 
+  debug() {
+    console.log('caught debug in battle enemy controller');
+  }
+
   disconnect() {
 
+  }
+
+  damage_target(event) {
+    console.log('damaging target!!!!');
+    // console.log('finished cast');
+    // console.log(event.detail);
   }
 
   get targeted() {

@@ -1,11 +1,3 @@
-<!--
-<div class="my-8" data-controller="hello">
-  <input type="text" value="text" class="border my-2 mx-4" data-target="hello.name">
-  <button class="bg-indigo-50 py-2 px-4">Greet</button>
-</div>
-<hr/>
--->
-
 <section class="text-gray-600 body-font">
   <div class="container px-5 py-8 mx-auto">
     <div class="flex flex-wrap -m-4">
@@ -18,6 +10,10 @@
           data-battle-enemy-level="<%= 1 + rand(10) %>"
           data-battle-enemy-targeted="<%= i == 0 %>"
           data-battle-enemy-max-health="<%= 1 + rand(10) * rand(10) %>"
+          data-action="
+            casting-spell:spellDamageTarget->battle-enemy#damage_target
+            spellDamageTarget@document->battle-enemy#debug
+          "
           class="p-4 lg:w-1/3"
         >
           <div data-battle-enemy-target="container"
@@ -64,10 +60,17 @@
     <div class="flex flex-wrap -mx-4 -my-8">
       <div class="py-8 px-4 lg:w-2/3">
         <div data-controller="casting-spell"
-          data-casting-spell-element="Water"
+          data-casting-spell-name="Lightning Bolt"
+          data-casting-spell-element="Light"
+          data-casting-spell-base-damage="5"
+          data-casting-spell-max-time="60"
+          data-action="
+            global-text-input:startedCastingSpell->casting-spell#start_casting
+            global-text-input:finishedCastingSpell->casting-spell#finish_casting
+          "
           class="h-full flex items-start"
         >
-          <div class="w-12 flex-shrink-0 flex flex-col text-center leading-none text-blue-500">
+          <div class="w-12 flex-shrink-0 flex flex-col text-center leading-none text-yellow-500">
             <span data-casting-spell-target="elementName"
               class="pb-2 mb-2 border-b-2 border-gray-200"
             >&nbsp;</span>
@@ -81,15 +84,17 @@
             <div class="flex flex-row items-start">
               <div>
                 <h2 class="tracking-widest text-xs title-font font-medium text-indigo-500 mb-1">CASTING SPELL</h2>
-                <h1 class="title-font text-xl font-medium text-gray-900 mb-3">Water Bolt</h1>
+                <h1 data-casting-spell-target="spellName"
+                  class="title-font text-xl font-medium text-gray-900 mb-3"
+                >&nbsp;</h1>
               </div>
               <div class="flex-grow ml-8">
                 <h2 class="tracking-widest text-xs title-font font-medium text-indigo-500 mb-1">CAST POWER</h2>
                 <div class="w-full bg-gray-200 h-2 my-1 rounded-lg">
-                  <div class="bg-orange-200 h-2 rounded-lg" style="width: <%= 100 - rand(50) %>%"></div>
+                  <div data-casting-spell-target="accuracyPowerBar" class="bg-orange-200 h-2 rounded-lg"></div>
                 </div>
                 <div class="w-full bg-gray-200 h-2 my-1 rounded-lg">
-                  <div class="bg-indigo-200 h-2 rounded-lg" style="width: <%= 100 - rand(50) %>%"></div>
+                  <div data-casting-spell-target="timePowerBar" class="bg-indigo-200 h-2 rounded-lg"></div>
                 </div>
               </div>
             </div>
@@ -97,6 +102,7 @@
             <div class="leading-relaxed mb-5 text-4xl text-gray-400"
               data-controller="global-text-input"
               data-global-text-input-message="There is no cow level!"
+              data-casting-spell-target="spellIncantation"
             >
               <span data-global-text-input-target="activated" class="text-indigo-500 border-r border-indigo-500"></span><span data-global-text-input-target="remaining" class="text-gray-400"></span>
             </div>
