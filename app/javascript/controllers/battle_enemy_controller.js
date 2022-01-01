@@ -46,10 +46,12 @@ export default class extends Controller {
   disconnect() { }
 
   receive_damage(event) {
-    this.animate_damage_taken();
+    if (this.targeted) {
+      this.animate_damage_taken();
 
-    this.remove_life(event.detail.damage);
-    this.update_health_bar();
+      this.remove_life(event.detail.damage);
+      this.update_health_bar();
+    }
   }
 
   remove_life(amount) {
