@@ -12,14 +12,24 @@ export default class extends Controller {
     this.elementNameTarget.textContent = this.data.get('element');
     this.spellNameTarget.textContent = this.data.get('name');
 
-    this.accuracyPowerBarTarget.style.width = '100%';
+    this.initialize_state();
 
     this.update_timer_bar();
+    this.update_accuracy_bar();
+  }
+
+  initialize_state() {
+    this.data.set('seconds-remaining', this.data.get('max-time'));
+    this.data.set('accuracy', 100);
   }
 
   update_timer_bar() {
     let timer_percent = Math.ceil(this.time_remaining / this.data.get('max-time') * 100);
     this.timePowerBarTarget.style.width = timer_percent + '%';
+  }
+
+  update_accuracy_bar() {
+    this.accuracyPowerBarTarget.style.width = this.accuracy + '%';
   }
 
   disconnect() { }
@@ -37,6 +47,13 @@ export default class extends Controller {
   start_casting(event) {
     this.create_ticking_timer();
     this.data.set('seconds-remaining', this.data.get('max-time'));
+  }
+
+  ding_accuracy(event) {
+    let accuracy_penalty = 3;
+    this.data.set('accuracy', this.accuracy - accuracy_penalty);
+
+    this.update_accuracy_bar();
   }
 
   finish_casting(event) {
@@ -87,6 +104,14 @@ export default class extends Controller {
       return parseInt(this.data.get('seconds-remaining'));
     } else {
       return parseInt(this.data.get('max-time'));
+    }
+  }
+
+  get accuracy() {
+    if (this.data.has('accuracy')) {
+      return parseInt(this.data.get('accuracy'));
+    } else {
+      return 100;
     }
   }
 }

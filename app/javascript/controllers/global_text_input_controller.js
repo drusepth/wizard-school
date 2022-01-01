@@ -20,6 +20,7 @@ export default class extends Controller {
   process_keypress(event) {
     let current_index = this.index;
     let expected_key = this.message[current_index];
+    let continuing_spell = this.index > 0;
 
     if (event.key == expected_key) {
       current_index += 1;
@@ -30,6 +31,15 @@ export default class extends Controller {
       this.data.set('index', current_index);
 
     } else {
+      if (continuing_spell) {
+        this.dispatch("incorrectSpellCharacter", {
+          detail: {
+            entered:  event.key,
+            expected: expected_key
+          }
+        });
+      }
+
       console.log(event.key + " != " + expected_key);
     }
 
