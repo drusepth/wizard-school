@@ -47,12 +47,18 @@ export default class extends Controller {
   disconnect() { }
 
   die() {
-    console.log('creature died');
-
     this.pause_battle();
 
     this.element.classList.add('transform', 'opacity-0', 'transition', 'duration-1000');
-    setTimeout(() => this.elementTarget.remove(), 1000)
+    setTimeout(() => {
+      this.element.remove();
+
+      if (this.targeted) {
+        this.dispatch("acquireNewTarget", {
+          detail: { }
+        });
+      }
+    }, 1000);
   }
 
   receive_damage(event) {
