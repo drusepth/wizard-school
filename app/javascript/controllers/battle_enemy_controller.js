@@ -72,6 +72,12 @@ export default class extends Controller {
     this.data.set('activity-interval', interval);
   }
 
+  pause_battle() {
+    if (this.data.get('activity-interval')) {
+      clearInterval(this.data.get('activity-interval'));
+    }
+  }
+
   activity_timer_tick() {
     let time_delta_per_tick = 0.05;
     let seconds_remaining = this.time_until_next_attack - time_delta_per_tick;

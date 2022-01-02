@@ -88,12 +88,19 @@ export default class extends Controller {
 
     // We dispatch the event to the full document (unscoped) so all
     // enemies can receive it, rather than a specific one.
-    const eventTrigger = new CustomEvent('spellDamageTarget', {
+    const damageEvent = new CustomEvent('spellDamageTarget', {
       detail: {
         damage: final_damage
       }
     });
-    document.dispatchEvent(eventTrigger);
+    document.dispatchEvent(damageEvent);
+
+    // We pause the battle between spells so the player has a little
+    // bit of time to breath, change spells, use items, etc.
+    const pauseEvent = new CustomEvent('pauseBattle', {
+      detail: { }
+    });
+    document.dispatchEvent(pauseEvent);
   }
 
   ticking_timer_tick() {
