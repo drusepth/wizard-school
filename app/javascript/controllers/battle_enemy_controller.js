@@ -46,6 +46,15 @@ export default class extends Controller {
 
   disconnect() { }
 
+  die() {
+    console.log('creature died');
+
+    this.pause_battle();
+
+    this.element.classList.add('transform', 'opacity-0', 'transition', 'duration-1000');
+    setTimeout(() => this.elementTarget.remove(), 1000)
+  }
+
   receive_damage(event) {
     if (this.targeted) {
       this.animate_damage_taken();
@@ -61,6 +70,8 @@ export default class extends Controller {
 
     if (current_health < 0) {
       current_health = 0;
+
+      this.die();
     }
 
     this.data.set('current-health', current_health);
