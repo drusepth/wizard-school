@@ -24,7 +24,8 @@ export default class extends Controller {
   }
 
   update_activity_bar() {
-    this.activityBarTarget.style.width = '0%';
+    let activity_percent = Math.ceil(this.time_until_next_attack / (parseInt(this.data.get('attack-interval'))) * 100)
+    this.activityBarTarget.style.width = (100 - activity_percent) + '%';
   }
 
   connect() {
@@ -65,13 +66,48 @@ export default class extends Controller {
     this.data.set('current-health', current_health);
   }
 
-  animate_damage_taken() {
-    this.imageTarget.classList.add('animate-spin');
-    setTimeout(this.reset_animations.bind(this), 1320);
+  resume_battle() {
+    let interval = setInterval(this.activity_timer_tick.bind(this), 50);
+
+    this.data.set('activity-interval', interval);
   }
 
-  reset_animations() {
-    this.imageTarget.classList.remove('animate-spin');
+  activity_timer_tick() {
+    let time_delta_per_tick = 0.05;
+    let seconds_remaining = this.time_until_next_attack - time_delta_per_tick;
+
+    if (seconds_remaining <= 0) {
+      this.attack_player();
+
+      seconds_remaining = parseInt(this.data.get('attack-interval'));
+    }
+
+    this.data.set('seconds-remaining-until-attack', seconds_remaining);
+    this.update_activity_bar();
+  }
+
+  attack_player() {
+    console.log('attacking player omg');
+
+    this.containerTarget.classList.add('animate-bounce');
+    setTimeout(this.reset_container_animations.bind(this), 1500);
+  }
+
+  animate_damage_taken() {
+    this.imageTarget.classList.add('animate-spin');
+    setTimeout(this.reset_image_animations.bind(this), 1320);
+  }
+
+  reset_image_animations() {
+    this.imageTarget.classList.remove(...[
+      'animate-spin', 'animate-bounce'
+    ]);
+  }
+
+  reset_container_animations() {
+    this.containerTarget.classList.remove(...[
+      'animate-spin', 'animate-bounce'
+    ]);
   }
 
   get targeted() {
@@ -79,6 +115,14 @@ export default class extends Controller {
       return this.data.get('targeted') == 'true';
     } else {
       return false;
+    }
+  }
+
+  get time_until_next_attack() {
+    if (this.data.has('seconds-remaining-until-attack')) {
+      return parseFloat(this.data.get('seconds-remaining-until-attack'));
+    } else {
+      return parseFloat(this.data.get('attack-interval'));
     }
   }
 

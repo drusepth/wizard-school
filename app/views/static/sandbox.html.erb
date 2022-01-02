@@ -10,8 +10,10 @@
           data-battle-enemy-level="<%= level = 1 + rand(10) %>"
           data-battle-enemy-targeted="<%= i == 0 %>"
           data-battle-enemy-max-health="<%= 1 + rand(10) * level %>"
+          data-battle-enemy-attack-interval="10"
           data-action="
             spellDamageTarget@document->battle-enemy#receive_damage
+            resumeBattle@document->battle-enemy#resume_battle
           "
           class="p-4 lg:w-1/3"
         >

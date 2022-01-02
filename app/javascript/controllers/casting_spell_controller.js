@@ -47,6 +47,11 @@ export default class extends Controller {
   start_casting(event) {
     this.create_ticking_timer();
     this.data.set('seconds-remaining', this.data.get('max-time'));
+
+    const eventTrigger = new CustomEvent('resumeBattle', {
+      detail: { }
+    });
+    document.dispatchEvent(eventTrigger);
   }
 
   ding_accuracy(event) {
