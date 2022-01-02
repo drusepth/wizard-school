@@ -87,7 +87,14 @@ export default class extends Controller {
   }
 
   attack_player() {
-    console.log('attacking player omg');
+    let damage = parseInt(this.data.get('damage'));
+
+    const eventTrigger = new CustomEvent('playerDamage', {
+      detail: {
+        damage: damage
+      }
+    });
+    document.dispatchEvent(eventTrigger);
 
     this.containerTarget.classList.add('animate-bounce');
     setTimeout(this.reset_container_animations.bind(this), 1500);

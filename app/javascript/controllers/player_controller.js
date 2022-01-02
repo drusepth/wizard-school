@@ -22,9 +22,11 @@ export default class extends Controller {
 
   disconnect() { }
 
-  receive_damage(event) {
-    this.animate_damage_taken();
+  debug() {
+    console.log('debug in player controller');
+  }
 
+  receive_damage(event) {
     this.remove_life(event.detail.damage);
     this.update_health_bar();
   }
@@ -38,15 +40,6 @@ export default class extends Controller {
     }
 
     this.data.set('current-health', current_health);
-  }
-
-  animate_damage_taken() {
-    this.imageTarget.classList.add('animate-spin');
-    setTimeout(this.reset_animations.bind(this), 1320);
-  }
-
-  reset_animations() {
-    this.imageTarget.classList.remove('animate-spin');
   }
 
   get current_health() {
