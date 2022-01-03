@@ -62,12 +62,10 @@ export default class extends Controller {
   }
 
   receive_damage(event) {
-    if (this.targeted) {
-      this.animate_damage_taken();
+    this.animate_damage_taken();
 
-      this.remove_life(event.detail.damage);
-      this.update_health_bar();
-    }
+    this.remove_life(event.detail.damage);
+    this.update_health_bar();
   }
 
   remove_life(amount) {

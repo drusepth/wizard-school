@@ -10,16 +10,14 @@
             data-battle-enemy-image="https://i.pinimg.com/originals/d6/7f/f3/d67ff3058db565b279e5a3c2cee52a77.jpg"
             data-battle-enemy-name="Blue Slime"
             data-battle-enemy-level="<%= level = 1 + rand(10) %>"
-            data-battle-enemy-targeted="<%= i == 0 %>"
-            data-battle-enemy-max-health="<%= 1 + rand(1) %>"
-            data-battle-enemy-attack-interval="10"
+            data-battle-enemy-targeted="<%= true %>"
+            data-battle-enemy-max-health="<%= 1 + rand(10) * level %>"
+            data-battle-enemy-attack-interval="<%= 15 - rand(1 + level) %>"
             data-battle-enemy-damage="4"
             data-action="
               spellDamageTarget@document->battle-enemy#receive_damage
               pauseBattle@document->battle-enemy#pause_battle
               resumeBattle@document->battle-enemy#resume_battle
-              battle-enemy:acquireNewTarget->battle#acquire_next_target
-              battle-enemy:focusThisTarget->battle-enemy#debug
             "
             class="p-4 lg:w-1/3"
           >

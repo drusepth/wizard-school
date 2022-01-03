@@ -17,15 +17,20 @@ export default class extends Controller {
 
   disconnect() { }
 
-  acquire_next_target() {
+  deal_damage_to_enemy(event) {
     let potential_targets = this.battleEnemyTargets;
 
     if (potential_targets.length > 0) {
-      this.battleEnemyTargets[1].dispatch("focusThisTarget");
+      this.battleEnemyTargets[1].dispatch("receiveDamage", {
+        detail: {
+          damage: event.detail.damage
+        }
+      });
     } else {
       // BATTLE IS OVER!
     }
-  }
 
+    console.log('battle damage dealer');
+  }
 
 }
